@@ -1,2 +1,2 @@
 # dgl_jax_backend
-JAX backend of DGL
+The JAX backend of DGL
