@@ -82,6 +82,7 @@ def load_backend(mod_name):
             thismod.from_dgl_nd = mod.zerocopy_from_dgl_ndarray
 
             dgl.backend_name = "jax"
-
+            import importlib
+            importlib.reload(dgl)
     else:
         raise NotImplementedError('Unsupported backend: %s' % mod_name)
