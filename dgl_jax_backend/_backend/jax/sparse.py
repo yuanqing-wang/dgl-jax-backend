@@ -3,14 +3,14 @@ import jax
 import jax.numpy as jnp
 from functools import partial
 from distutils.version import LooseVersion
-from dgl.base import is_all, ALL
-from dgl.sparse import infer_broadcast_shape
-from dgl.sparse import _gspmm, _gspmm_hetero, _gsddmm, _gsddmm_hetero, _segment_reduce, _bwd_segment_cmp
-from dgl.sparse import _csrmm, _csrsum, _csrmask, _scatter_add, _update_grad_minmax_hetero
-from dgl.sparse import _gather_mm, _gather_mm_scatter, _segment_mm, _segment_mm_backward_B
-from dgl.sparse import _gspmm, _gspmm_hetero, _gsddmm, _gsddmm_hetero, _segment_reduce, _bwd_segment_cmp, _edge_softmax_forward, _edge_softmax_backward
-from dgl.sparse import _csrmm, _csrsum, _csrmask, _scatter_add, _update_grad_minmax_hetero
-from dgl.heterograph_index import create_unitgraph_from_csr
+from ...base import is_all, ALL
+from ...sparse import infer_broadcast_shape
+from ...sparse import _gspmm, _gspmm_hetero, _gsddmm, _gsddmm_hetero, _segment_reduce, _bwd_segment_cmp
+from ...sparse import _csrmm, _csrsum, _csrmask, _scatter_add, _update_grad_minmax_hetero
+from ...sparse import _gather_mm, _gather_mm_scatter, _segment_mm, _segment_mm_backward_B
+from ...sparse import _gspmm, _gspmm_hetero, _gsddmm, _gsddmm_hetero, _segment_reduce, _bwd_segment_cmp, _edge_softmax_forward, _edge_softmax_backward
+from ...sparse import _csrmm, _csrsum, _csrmask, _scatter_add, _update_grad_minmax_hetero
+from ...heterograph_index import create_unitgraph_from_csr
 from jax.experimental import host_callback as hcb
 
 # __all__ = ['gspmm', 'gsddmm', 'gspmm_hetero', 'gsddmm_hetero', 'edge_softmax', 'edge_softmax_hetero',

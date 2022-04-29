@@ -20,39 +20,21 @@ def _gen_missing_api(api, mod_name):
                           ' the DGLBACKEND environment.' % (api, mod_name))
     return _missing_api
 
-def load_backend(mod_name):
-    # Load backend does four things:
-    # (1) Import backend framework (PyTorch, MXNet, Tensorflow, etc.)
-    # (2) Import DGL C library.  DGL imports it *after* PyTorch/MXNet/Tensorflow.  Otherwise
-    #     DGL will crash with errors like `munmap_chunk(): invalid pointer`.
-    # (3) Sets up the tensoradapter library path.
-    # (4) Import the Python wrappers of the backend framework.  DGL does this last because
-    #     it already depends on both the backend framework and the DGL C library.
-    if mod_name == 'pytorch':
-        import torch
-        mod = torch
-    elif mod_name == 'mxnet':
-        import mxnet
-        mod = mxnet
-    elif mod_name == 'tensorflow':
-        import tensorflow
-        mod = tensorflow
-    elif mod_name == "jax":
-        import jax
-        mod = jax
-    else:
-        raise NotImplementedError('Unsupported backend: %s' % mod_name)
+def load_backend(mod_name="jax"):
+    if mod_name is not "jax":
+        raise NotImplementedError("If you do not wish to use JAX backend, "
+            "import dgl directly."
+        )
 
-    from dgl._ffi.base import load_tensor_adapter # imports DGL C library
-    version = mod.__version__
-    load_tensor_adapter(mod_name, version)
+    import jax
+    mod = jax
+
+    # from .._ffi.base import load_tensor_adapter # imports DGL C library
+    # version = mod.__version__
+    # load_tensor_adapter(mod_name, version)
 
     logger.debug('Using backend: %s' % mod_name)
-    if mod_name == "jax":
-        from dgl_jax_backend._backend import jax as _jax
-        mod = _jax
-    else:
-        mod = importlib.import_module('.%s' % mod_name, __name__)
+    mod = importlib.import_module('.%s' % mod_name, __name__)
     thismod = sys.modules[__name__]
     for api in backend.__dict__.keys():
         if api.startswith('__'):
@@ -89,31 +71,10 @@ def load_backend(mod_name):
             else:
                 setattr(thismod, api, _gen_missing_api(api, mod_name))
 
-# def get_preferred_backend():
-#     default_dir = None
-#     if "DGLDEFAULTDIR" in os.environ:
-#         default_dir = os.getenv('DGLDEFAULTDIR')
-#     else:
-#         default_dir = os.path.join(os.path.expanduser('~'), '.dgl')
-#     config_path = os.path.join(default_dir, 'config.json')
-#     backend_name = None
-#     if "DGLBACKEND" in os.environ:
-#         backend_name = os.getenv('DGLBACKEND')
-#     elif os.path.exists(config_path):
-#         with open(config_path, "r") as config_file:
-#             config_dict = json.load(config_file)
-#             backend_name = config_dict.get('backend', '').lower()
-#
-#     if (backend_name in ['tensorflow', 'mxnet', 'pytorch', 'jax']):
-#         return backend_name
-#     else:
-#         print("DGL backend not selected or invalid.  "
-#               "Assuming PyTorch for now.", file=sys.stderr)
-#         set_default_backend(default_dir, 'pytorch')
-#         return 'pytorch'
+def get_preferred_backend():
+    return "jax"
 
-
-load_backend("jax")
+load_backend(get_preferred_backend())
 
 
 def is_enabled(api):

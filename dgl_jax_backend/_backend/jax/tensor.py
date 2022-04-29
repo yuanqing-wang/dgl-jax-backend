@@ -14,10 +14,10 @@ import numbers
 # from torch.utils import dlpack
 
 
-from dgl import ndarray as nd
-from dgl._deprecate import kernel as K
-from dgl.function.base import TargetCode
-from dgl.base import dgl_warning
+from ... import ndarray as nd
+from ..._deprecate import kernel as K
+from ...function.base import TargetCode
+from ...base import dgl_warning
 
 from functools import partial
 
