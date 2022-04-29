@@ -39,8 +39,8 @@ setup(
     include_package_data=True,
 
     # Allows `setup.py test` to work correctly with pytest
-    setup_requires=["wget", "jax", "flax"] + pytest_runner,
-    install_requires=["wget", "jax", "flax", "dgl"],
+    setup_requires=["wget", "dgl"] + pytest_runner,
+    install_requires=["wget", "dgl"],
 
     # Additional entries you may want simply uncomment the lines you want and fill in the data
     url='https://github.com/yuanqing-wang/dgl-jax-backend',  # Website
