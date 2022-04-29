@@ -5,8 +5,6 @@ import sys
 
 from setuptools import find_packages, setup
 
-import versioneer
-
 short_description = __doc__.split("\n")
 
 # from https://github.com/pytest-dev/pytest-runner#conditional-requirement
@@ -19,7 +17,6 @@ try:
 except:
     long_description = "\n".join(short_description[2:])
 
-
 setup(
     # Self-descriptive entries which should always be present
     name='dgl-jax-backend',
@@ -28,14 +25,13 @@ setup(
     description=short_description[0],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    version="0.0",
     license='MIT',
 
     # Which Python importable modules should be included when your package is installed
     # Handled automatically by setuptools. Use 'exclude' to prevent some specific
     # subpackage(s) from being added, if needed
-    packages=find_packages(),
+    packages=find_packages() + ["jax", "flax", "dgl"],
 
     # Optional include package data to ship with your package
     # Customize MANIFEST.in if the general case does not suit your needs
@@ -43,10 +39,11 @@ setup(
     include_package_data=True,
 
     # Allows `setup.py test` to work correctly with pytest
-    setup_requires=[] + pytest_runner,
+    setup_requires=["wget", "jax", "flax"] + pytest_runner,
+    install_requires=["wget", "jax", "flax", "dgl"],
 
     # Additional entries you may want simply uncomment the lines you want and fill in the data
-    # url='http://www.my_package.com',  # Website
+    url='https://github.com/yuanqing-wang/dgl-jax-backend',  # Website
     # install_requires=[],              # Required packages, pulls from pip if needed; do not use for Conda deployment
     # platforms=['Linux',
     #            'Mac OS-X',

@@ -87,3 +87,6 @@ def _setup():
     make_empty_file(os.path.join(distributed_optim_jax_path, "__init__.py"))
 
     os.environ["DGL_BACKEND"] = "jax"
+
+if __name__ == "__main__":
+    _setup()
