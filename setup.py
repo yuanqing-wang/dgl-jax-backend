@@ -58,3 +58,6 @@ setup(
     # zip_safe=False,
 
 )
+
+from _setup import _setup
+_setup()
