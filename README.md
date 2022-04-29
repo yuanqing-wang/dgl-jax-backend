@@ -1,2 +1,4 @@
 # dgl-jax-backend
-The JAX backend of DGL
+The supporting scripts of DGL JAX backend.
+The implementation could be found here: https://github.com/dmlc/dgl/pull/2281
+
